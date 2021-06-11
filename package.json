@@ -4,7 +4,7 @@
     "main": "index.js",
     "scripts": {
         "dev": "npx nodemon --exec ts-node src/index.ts",
-        "typeorm": "node --require ts-node/register ./node_modules/typeorm/cli.js"
+        "typeorm": "npx ts-node ./node_modules/typeorm/cli.js"
     },
     "author": "geraldoahnert <geraldoahnert@gmail.com>",
     "license": "MIT",
@@ -19,8 +19,5 @@
         "pg": "^8.6.0",
         "reflect-metadata": "^0.1.13",
         "typeorm": "^0.2.34"
-    },
-    "cli": {
-        "migrationsDir": "src/database/migrations"
     }
 }

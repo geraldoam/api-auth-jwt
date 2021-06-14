@@ -20,6 +20,7 @@ export default function authMiddleware(
     const token = authorization.replace("Bearer", "").trim();
 
     try {
+        // The second param is a secret key, don't use in prod.
         const data = jwt.verify(token, "secret");
 
         const { id } = data as TokenPayLoad;

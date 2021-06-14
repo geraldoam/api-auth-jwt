@@ -22,6 +22,7 @@ class AuthController {
             return response.sendStatus(401);
         }
 
+        // The second param is a secret key, don't use in prod.
         const token = jwt.sign({ id: user.id }, "secret", { expiresIn: "1d" });
 
         delete user.password;

@@ -1,5 +1,7 @@
-import { Request, Response, NextFunction } from "express";
-import jwt from "jsonwebtoken";
+import { Request, Response, NextFunction } from 'express';
+import jwt from 'jsonwebtoken';
+
+require('dotenv/config');
 
 interface TokenPayLoad {
     id: string;
@@ -17,11 +19,11 @@ export default function authMiddleware(
         return res.sendStatus(401);
     }
 
-    const token = authorization.replace("Bearer", "").trim();
+    const token = authorization.replace('Bearer', '').trim();
 
     try {
         // The second param is a secret key, don't use in prod.
-        const data = jwt.verify(token, "secret");
+        const data = jwt.verify(token, process.env.JWT_KEY);
 
         const { id } = data as TokenPayLoad;
 

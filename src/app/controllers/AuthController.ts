@@ -1,9 +1,11 @@
-import { Request, Response } from "express";
-import { getRepository } from "typeorm";
-import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
+import { Request, Response } from 'express';
+import { getRepository } from 'typeorm';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 
-import User from "../models/User";
+import User from '../models/User';
+
+require('dotenv/config');
 
 class AuthController {
     async authenticate(request: Request, response: Response) {
@@ -23,7 +25,9 @@ class AuthController {
         }
 
         // The second param is a secret key, don't use in prod.
-        const token = jwt.sign({ id: user.id }, "secret", { expiresIn: "1d" });
+        const token = jwt.sign({ id: user.id }, process.env.JWT_KEY, {
+            expiresIn: '1d',
+        });
 
         delete user.password;
 

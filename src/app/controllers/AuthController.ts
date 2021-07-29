@@ -8,34 +8,34 @@ import User from '../models/User';
 require('dotenv/config');
 
 class AuthController {
-    async authenticate(request: Request, response: Response) {
-        const repository = getRepository(User);
+  async authenticate(request: Request, response: Response) {
+    const repository = getRepository(User);
 
-        const { email, password } = request.body;
+    const { email, password } = request.body;
 
-        const user = await repository.findOne({ where: { email } });
+    const user = await repository.findOne({ where: { email } });
 
-        if (!user) {
-            return response.sendStatus(401);
-        }
-
-        const isValidPassword = await bcrypt.compare(password, user.password);
-        if (!isValidPassword) {
-            return response.sendStatus(401);
-        }
-
-        // The second param is a secret key, don't use in prod.
-        const token = jwt.sign({ id: user.id }, process.env.JWT_KEY, {
-            expiresIn: '1d',
-        });
-
-        delete user.password;
-
-        return response.json({
-            user,
-            token,
-        });
+    if (!user) {
+      return response.sendStatus(401);
     }
+
+    const isValidPassword = await bcrypt.compare(password, user.password);
+    if (!isValidPassword) {
+      return response.sendStatus(401);
+    }
+
+    // The second param is a secret key, don't use in prod.
+    const token = jwt.sign({ id: user.id }, process.env.JWT_KEY, {
+      expiresIn: '1d',
+    });
+
+    delete user.password;
+
+    return response.json({
+      user,
+      token,
+    });
+  }
 }
 
 export default new AuthController();

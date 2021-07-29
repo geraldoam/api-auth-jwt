@@ -4,33 +4,33 @@ import jwt from 'jsonwebtoken';
 require('dotenv/config');
 
 interface TokenPayLoad {
-    id: string;
-    iat: number;
-    exp: number;
+  id: string;
+  iat: number;
+  exp: number;
 }
 
 export default function authMiddleware(
-    req: Request,
-    res: Response,
-    next: NextFunction
+  req: Request,
+  res: Response,
+  next: NextFunction
 ) {
-    const { authorization } = req.headers;
-    if (!authorization) {
-        return res.sendStatus(401);
-    }
+  const { authorization } = req.headers;
+  if (!authorization) {
+    return res.sendStatus(401);
+  }
 
-    const token = authorization.replace('Bearer', '').trim();
+  const token = authorization.replace('Bearer', '').trim();
 
-    try {
-        // The second param is a secret key, don't use in prod.
-        const data = jwt.verify(token, process.env.JWT_KEY);
+  try {
+    // The second param is a secret key, don't use in prod.
+    const data = jwt.verify(token, process.env.JWT_KEY);
 
-        const { id } = data as TokenPayLoad;
+    const { id } = data as TokenPayLoad;
 
-        req.userId = id;
+    req.userId = id;
 
-        return next();
-    } catch {
-        return res.sendStatus(401);
-    }
+    return next();
+  } catch {
+    return res.sendStatus(401);
+  }
 }

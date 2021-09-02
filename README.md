@@ -38,10 +38,10 @@
 
 # post
 {
-	"email": "teste04@gmail.com",
-	"password": "123456"
+  "email": "teste04@gmail.com",
+  "password": "123456"
 }
 
 # return
-jwt token
+"(jwt token)"
 ```

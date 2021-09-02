@@ -9,3 +9,39 @@
 - TypeScript.
 - Postgres with TypeORM.
 - JWT, Bcrypt.
+
+#### API
+
+##### Create User
+
+```
+/users
+
+# post
+{
+  "email": "email@email.com",
+  "password": "password"
+}
+
+# return
+{
+  "email": "email@email.com",
+  "password": "password",
+  "id": "id"
+}
+```
+
+##### Auth User
+
+```
+/auth
+
+# post
+{
+	"email": "teste04@gmail.com",
+	"password": "123456"
+}
+
+# return
+jwt token
+```

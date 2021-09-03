@@ -35,7 +35,7 @@ class AuthService {
       {
         email: user.email,
       },
-      'batata',
+      process.env.JWT_KEY,
       {
         subject: user.id,
         expiresIn: '1d',

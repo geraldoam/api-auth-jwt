@@ -1,12 +1,10 @@
 import { Request, Response, NextFunction } from 'express';
-import jwt from 'jsonwebtoken';
+import { verify } from 'jsonwebtoken';
 
 require('dotenv').config();
 
 interface TokenPayLoad {
-  id: string;
-  iat: number;
-  exp: number;
+  sub: string;
 }
 
 export default function authMiddleware(
@@ -19,14 +17,12 @@ export default function authMiddleware(
     return res.send(401);
   }
 
-  const token = authorization.replace('Bearer', '').trim();
+  const token = authorization.split(' ')[1];
 
   try {
-    const data = jwt.verify(token, process.env.JWT_KEY);
+    const { sub } = verify(token, process.env.JWT_KEY) as TokenPayLoad;
 
-    const { id } = data as TokenPayLoad;
-
-    req.userId = id;
+    req.userId = sub;
 
     return next();
   } catch {

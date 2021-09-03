@@ -14,7 +14,7 @@
 
 ##### Create User
 
-```
+```json
 /users
 
 # post
@@ -31,10 +31,10 @@
 }
 ```
 
-##### Auth User
+##### Login User
 
-```
-/auth
+```json
+/login
 
 # post
 {
@@ -44,4 +44,17 @@
 
 # return
 "(jwt token)"
+```
+
+##### Auth User (Authenticate with Middleware)
+
+```json
+/users
+
+# get | Bearer Token -> JWT Token
+
+# return
+{
+  "userID": "(userId)"
+}
 ```
